@@ -116,7 +116,6 @@ const formatMovementDays = function (date, locale) {
     Math.round(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24));
 
   const dayPassed = calcDayPassed(new Date(), date);
-  console.log(dayPassed);
 
   if (dayPassed === 0) return "Today";
   if (dayPassed === 1) return "Yesterday";
@@ -190,7 +189,6 @@ const createUsername = function (accs) {
         return name[0];
       })
       .join("");
-    // console.log(acc.username);
   });
 };
 
@@ -230,18 +228,14 @@ const startLogOutTimer = function () {
 };
 
 let currentAccaunt, timer;
-
 btnLogin.addEventListener("click", function (e) {
   e.preventDefault();
 
   currentAccaunt = accounts.find(
     (acc) => acc.username === inputLoginUsername.value
   );
-  // console.log(currentAccaunt);
 
   if (currentAccaunt?.pin === Number(inputLoginPin.value)) {
-    console.log("LOGIN");
-
     // Display UI AND MASSAGe
     labelWelcome.textContent = `Welcome back, ${
       currentAccaunt.owner.split(" ")[0]
@@ -259,7 +253,6 @@ btnLogin.addEventListener("click", function (e) {
     };
 
     const locale = navigator.language;
-    console.log(locale);
 
     labelDate.textContent = new Intl.DateTimeFormat(
       currentAccaunt.locale,
@@ -306,6 +299,11 @@ btnTransfer.addEventListener("click", function (e) {
     reveiverAcc.movementsDates.push(new Date().toISOString());
 
     updateUI(currentAccaunt);
+  }
+  if (reveiverAcc?.username === currentAccaunt.username) {
+    alert(
+      `${currentAccaunt.username} - This is your account, transfer to another account, for example: js, jd, stw, ss `
+    );
   }
   inputTransferAmount.value = inputTransferTo.value = "";
 });
